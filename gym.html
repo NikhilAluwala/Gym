@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife Pro | Premium Fitness Experience</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --gradient-start: #3498db;
+            --gradient-end: #2980b9;
+            --card-bg: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+        }
+
+        .dark-theme {
+            --primary-color: #ecf0f1;
+            --accent-color: #e74c3c;
+            --gradient-start: #2c3e50;
+            --gradient-end: #34495e;
+            --card-bg: #34495e;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+        }
+
+        body {
+            background-color: #f5f6fa;
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .dark-theme body {
+            background-color: #2c3e50;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white !important;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+            border-radius: 5px;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(180deg);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .registration-section {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: -4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            padding: 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .user-card {
+            position: relative;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: none;
+            overflow: hidden;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .user-card .card-header {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 1rem;
+            border-bottom: none;
+        }
+
+        .status-green {
+            border-top: 4px solid #2ecc71;
+        }
+
+        .status-yellow {
+            border-top: 4px solid #f1c40f;
+        }
+
+        .status-red {
+            border-top: 4px solid #e74c3c;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .user-info {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .user-info i {
+            width: 25px;
+            color: var(--accent-color);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .filter-section {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .pagination .page-link {
+            border: none;
+            margin: 0 5px;
+            border-radius: 5px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .pagination .page-link:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .pagination .active .page-link {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 0;
+            }
+            
+            .registration-section {
+                margin-top: -2rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-dumbbell"></i> FitLife Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-section="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="users">Members</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button class="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section class="home-section">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">Transform Your Life Today</h1>
+                <p class="hero-subtitle">Join our premium fitness community and achieve your goals</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="registration-section">
+                        <h3 class="text-center mb-4">Start Your Fitness Journey</h3>
+                        <form id="registrationForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mobile" class="form-label">Mobile Number</label>
+                                <input type="tel" class="form-control" id="mobile" pattern="[0-9]{10}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="plan" class="form-label">Membership Plan</label>
+                                <select class="form-select" id="plan" required>
+                                    <option value="">Select your plan</option>
+                                    <option value="Monthly">Monthly - $49/month</option>
+                                    <option value="Quarterly">Quarterly - $129/quarter</option>
+                                    <option value="Yearly">Yearly - $449/year</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Register Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Users Section -->
+    <section class="users-section" style="display: none;">
+        <div class="container">
+            <div class="filter-section mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h4 class="mb-0">Members Directory</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-select" id="statusFilter">
+                            <option value="all">All Members</option>
+                            <option value="green">Active Members</option>
+                            <option value="yellow">Due Soon</option>
+                            <option value="red">Renewal Overdue</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="userCards">
+                <!-- User cards will be dynamically inserted here -->
+            </div>
+
+            <nav aria-label="Member pagination">
+                <ul class="pagination justify-content-center mt-4" id="pagination">
+                    <!-- Pagination will be dynamically inserted here -->
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // File storage implementation
+        class StorageManager {
+            constructor() {
+                this.storageKey = 'gymMembers';
+                this.loadInitialData();
+            }
+
+            loadInitialData() {
+                if (!localStorage.getItem(this.storageKey)) {
+                    const initialData = [
+    {
+        name: "Alice Johnson",
+        email: "alice.johnson@example.com",
+        mobile: "1234567891",
+        plan: "Monthly",
+        renewalDate: "2025-01-15", // Overdue
+        joinDate: "2024-01-20"
+    },
+    {
+        name: "Bob Williams",
+        email: "bob.williams@example.com",
+        mobile: "2345678912",
+        plan: "Yearly",
+        renewalDate: "2025-01-21", // 2 days away
+        joinDate: "2024-02-01"
+    },
+    {
+        name: "Charlie Davis",
+        email: "charlie.davis@example.com",
+        mobile: "3456789123",
+        plan: "Monthly",
+        renewalDate: "2025-01-12", // Overdue
+        joinDate: "2024-02-15"
+    },
+    {
+        name: "Diana Roberts",
+        email: "diana.roberts@example.com",
+        mobile: "4567891234",
+        plan: "Yearly",
+        renewalDate: "2025-01-26", // 7 days away
+        joinDate: "2024-03-10"
+    },
+    {
+        name: "Ethan Brown",
+        email: "ethan.brown@example.com",
+        mobile: "5678912345",
+        plan: "Monthly",
+        renewalDate: "2025-01-19", // Active today
+        joinDate: "2024-04-01"
+    },
+    {
+        name: "Fiona Clark",
+        email: "fiona.clark@example.com",
+        mobile: "6789123456",
+        plan: "Yearly",
+        renewalDate: "2025-01-17", // Overdue
+        joinDate: "2024-05-10"
+    },
+    {
+        name: "George Harris",
+        email: "george.harris@example.com",
+        mobile: "7891234567",
+        plan: "Monthly",
+        renewalDate: "2025-01-23", // 4 days away
+        joinDate: "2024-06-20"
+    },
+    {
+        name: "Hannah White",
+        email: "hannah.white@example.com",
+        mobile: "8912345678",
+        plan: "Yearly",
+        renewalDate: "2025-01-10", // Overdue
+        joinDate: "2024-07-15"
+    },
+    {
+        name: "Ian Lewis",
+        email: "ian.lewis@example.com",
+        mobile: "9123456789",
+        plan: "Monthly",
+        renewalDate: "2025-01-25", // 6 days away
+        joinDate: "2024-08-01"
+    },
+    {
+        name: "Jasmine Hall",
+        email: "jasmine.hall@example.com",
+        mobile: "9988776655",
+        plan: "Yearly",
+        renewalDate: "2025-02-15", // Active
+        joinDate: "2024-09-01"
+    },
+    {
+        name: "Kevin Turner",
+        email: "kevin.turner@example.com",
+        mobile: "7894561230",
+        plan: "Monthly",
+        renewalDate: "2025-01-09", // Overdue
+        joinDate: "2024-10-10"
+    },
+    {
+        name: "Laura Scott",
+        email: "laura.scott@example.com",
+        mobile: "9871236540",
+        plan: "Yearly",
+        renewalDate: "2025-01-29", // 10 days away
+        joinDate: "2024-11-01"
+    },
+    {
+        name: "Michael Green",
+        email: "michael.green@example.com",
+        mobile: "1237894560",
+        plan: "Monthly",
+        renewalDate: "2025-01-18", // Overdue
+        joinDate: "2024-12-01"
+    },
+    {
+        name: "Nina Bell",
+        email: "nina.bell@example.com",
+        mobile: "4561237890",
+        plan: "Yearly",
+        renewalDate: "2025-01-27", // 8 days away
+        joinDate: "2024-12-20"
+    },
+    {
+        name: "Oscar Reed",
+        email: "oscar.reed@example.com",
+        mobile: "6543219870",
+        plan: "Monthly",
+        renewalDate: "2025-01-28", // 9 days away
+        joinDate: "2025-01-01"
+    }
+];
+
+
+                    localStorage.setItem(this.storageKey, JSON.stringify(initialData));
+                }
+            }
+
+            getMembers() {
+                return JSON.parse(localStorage.getItem(this.storageKey)) || [];
+            }
+
+            addMember(member) {
+                const members = this.getMembers();
+                members.push(member);
+                localStorage.setItem(this.storageKey, JSON.stringify(members));
+            }
+        }
+
+        // Initialize storage manager
+        const storageManager = new StorageManager();
+
+        // Global variables
+        const itemsPerPage = 6;
+        let currentPage = 1;
+        let filteredUsers = [...storageManager.getMembers()];
+
+        // Theme toggle functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.parentElement.classList.toggle('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
+
+        // Navigation functionality
+        document.querySelectorAll('[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = e.target.dataset.section;
+                document.querySelector('.home-section').style.display = section === 'home' ? 'block' : 'none';
+                document.querySelector('.users-section').style.display = section === 'users' ? 'block' : 'none';
+                
+                // Update active state
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                e.target.classList.add('active');
+
+                if (section === 'users') {
+                    filteredUsers = storageManager.getMembers();
+                    renderUserCards();
+                }
+            });
+        });
+
+        // Registration form submission
+        document.getElementById('registrationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Calculate renewal date based on plan
+            const planDurations = {
+                'Monthly': 1,
+                'Quarterly': 3,
+                'Yearly': 12
+            };
+            
+            const selectedPlan = document.getElementById('plan').value;
+            const renewalDate = new Date();
+            renewalDate.setMonth(renewalDate.getMonth() + planDurations[selectedPlan]);
+
+            const newMember = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                mobile: document.getElementById('mobile').value,
+                plan: selectedPlan,
+                joinDate: new Date().toISOString().split('T')[0],
+                renewalDate: renewalDate.toISOString().split('T')[0]
+            };
+
+            storageManager.addMember(newMember);
+            
+            // Show success message
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success mt-3 alert-dismissible fade show';
+            successAlert.innerHTML = `
+                <strong>Welcome aboard!</strong> Registration successful.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            e.target.insertAdjacentElement('beforebegin', successAlert);
+            
+            // Reset form
+            e.target.reset();
+        });
+
+        // Status filter functionality
+        document.getElementById('statusFilter').addEventListener('change', (e) => {
+            const status = e.target.value;
+            filteredUsers = status === 'all' ? 
+                storageManager.getMembers() : 
+                storageManager.getMembers().filter(user => getStatusColor(user.renewalDate) === status);
+            currentPage = 1;
+            renderUserCards();
+        });
+
+        // Helper function to get status color based on renewal date
+        function getStatusColor(renewalDate) {
+            const daysUntilRenewal = Math.ceil((new Date(renewalDate) - new Date()) / (1000 * 60 * 60 * 24));
+            if (daysUntilRenewal < 0) return 'red';
+            if (daysUntilRenewal <= 7) return 'yellow';
+            return 'green';
+        }
+
+        // Helper function to get status text
+        function getStatusText(color) {
+            const statusMap = {
+                'green': 'Active',
+                'yellow': 'Due Soon',
+                'red': 'Overdue'
+            };
+            return statusMap[color];
+        }
+
+        // Render user cards with pagination
+        function renderUserCards() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const userCards = document.getElementById('userCards');
+            userCards.innerHTML = '';
+
+            filteredUsers.slice(startIndex, endIndex).forEach(user => {
+                const statusColor = getStatusColor(user.renewalDate);
+                const statusText = getStatusText(statusColor);
+                const daysUntilRenewal = Math.ceil((new Date(user.renewalDate) - new Date()) / (1000 * 60 * 60 * 24));
+                
+                userCards.innerHTML += `
+                    <div class="col-md-4 mb-4">
+                        <div class="user-card status-${statusColor}">
+                            <div class="card-header">
+                                <h5 class="mb-0">${user.name}</h5>
+                                <span class="status-badge ">
+                                    ${statusText}
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="user-info">
+                                    <i class="fas fa-envelope"></i> ${user.email}
+                                </div>
+                                <div class="user-info">
+                                    <i class="fas fa-phone"></i> ${user.mobile}
+                                </div>
+                                <div class="user-info">
+                                    <i class="fas fa-calendar-alt"></i> Joined: ${user.joinDate}
+                                </div>
+                                <div class="user-info">
+                                    <i class="fas fa-clock"></i> Renewal: ${user.renewalDate}
+                                    <small class="d-block text-${statusColor === 'yellow' ? 'warning' : statusColor}">
+                                        (${Math.abs(daysUntilRenewal)} days ${daysUntilRenewal >= 0 ? 'remaining' : 'overdue'})
+                                    </small>
+                                </div>
+                                <div class="user-info">
+                                    <i class="fas fa-chart-line"></i> ${user.plan} Plan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            renderPagination();
+        }
+
+        // Render pagination
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            if (totalPages > 1) {
+                // Previous button
+                pagination.innerHTML += `
+                    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${currentPage - 1}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                `;
+
+                // Page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    pagination.innerHTML += `
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `;
+                }
+
+                // Next button
+                pagination.innerHTML += `
+                    <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${currentPage + 1}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                `;
+            }
+
+            // Add click event listeners
+            pagination.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (e.target.closest('.page-link')) {
+                    const pageLink = e.target.closest('.page-link');
+                    const newPage = parseInt(pageLink.dataset.page);
+                    if (!isNaN(newPage) && newPage !== currentPage && newPage > 0 && newPage <= totalPages) {
+                        currentPage = newPage;
+                        renderUserCards();
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
